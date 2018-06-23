@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">LerntagebuchOOP</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- actionBar -->
+    <string name="actionbar_topic">defaultTopic</string>
+    <string name="actionbar_topic_login">Login</string>
+    <string name="actionbar_topic_all_topics">Alle Themen</string>
+    <string name="actionbar_topic_tasks">Aktuelle Aufgaben</string>
+    <string name="actionbar_topic_feedback_questions">Nachrichten</string>
+    <string name="actionbar_topic_settings">Einstellungen</string>
+    <string name="actionbar_topic_uncertainties">Unklarheiten klären</string>
+
+    <!-- activity_login -->
+    <string name="login_button_login">Login</string>
+
+
 </resources>
