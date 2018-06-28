@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="topics">
+		<item>Primitive Datentypen</item>
+		<item>Referenzdatentypen</item>
+		<item>Schleifen</item>
+		<item>Methoden</item>
+		<item>DOOM</item>
+	</string-array>
+</resources>

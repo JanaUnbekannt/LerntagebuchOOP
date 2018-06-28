@@ -4,7 +4,9 @@ package com.example.students.lerntagebuchoop.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -38,13 +40,28 @@ public class LoginActivity extends AppCompatActivity {
         String actionBarTitle = getString(R.string.actionbar_topic_login);
         actionBarTopic.setText(actionBarTitle);
 
+
         //Logik für Login-Button
         Button buttonLogin= (Button)findViewById(R.id.login_button_login);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
-               LoginActivity.this.startActivity(intent);
+                TextInputEditText username = findViewById(R.id.username);
+                String usernameValue = username.getText().toString();
+                TextInputEditText password = findViewById(R.id.password);
+                String passwordValue = password.getText().toString();
+                if(!"".equals(usernameValue) && !"".equals(passwordValue)){
+                    Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
+                    LoginActivity.this.startActivity(intent);
+                }
+                else{
+                    if("".equals(usernameValue)) {
+                        username.setError("Bitte Nutzernamen eingeben!");
+                    }
+                    if("".equals(passwordValue)){
+                        password.setError("Bitte Passwort eingeben!");
+                    }
+                }
 
             }
         });

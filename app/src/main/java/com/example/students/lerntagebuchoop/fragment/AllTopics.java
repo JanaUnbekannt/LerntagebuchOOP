@@ -1,14 +1,37 @@
 package com.example.students.lerntagebuchoop.fragment;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.os.Environment;
 
 import com.example.students.lerntagebuchoop.R;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +46,11 @@ public class AllTopics extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    View mView;
+    ListView mListView;
+    ArrayAdapter<String> mAdapter;
+    String [] parsedXml;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -59,13 +87,19 @@ public class AllTopics extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        parsedXml = getResources().getStringArray(R.array.topics);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_topics, container, false);
+        mView = inflater.inflate(R.layout.fragment_all_topics, container, false);
+        mListView = (ListView) mView.findViewById(R.id.allTopicsListView);
+        mAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_dropdown_item_1line, android.R.id.text1, parsedXml);
+        mListView.setAdapter(mAdapter);
+        return mView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -106,4 +140,5 @@ public class AllTopics extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
