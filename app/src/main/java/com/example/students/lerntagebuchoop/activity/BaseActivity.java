@@ -65,6 +65,7 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
         actionBarTopic.setText(actionBarTitle);
 
         //TODO Navigation Screens set currentScreen oder change Fragment
+        //TODO Unterscheiden von CurrentTask OldTask
         //TODO Change Button Design
         //TODO BackStack
         ImageButton actionBarNavigationButton= (ImageButton)view.findViewById(R.id.action_bar_navigation);
