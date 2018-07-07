@@ -1,10 +1,14 @@
 package com.example.students.lerntagebuchoop.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.students.lerntagebuchoop.R;
 
@@ -76,6 +81,7 @@ public class AllTopics extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_all_topics, container, false);
         mListView = (ListView) mView.findViewById(R.id.allTopicsListView);
@@ -85,7 +91,15 @@ public class AllTopics extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               //ToDo Routing zu seiten einbauen
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                String nextTasks = ((TextView) view).getText().toString();
+                nextTasks = nextTasks.toLowerCase();
+                nextTasks = nextTasks.replaceAll("\\s+",""); //XML entspricht lowerCase ohne whitespace
+                Tasks tasks = new Tasks();
+                Bundle args = new Bundle();
+                args.putString("taskName", nextTasks);
+                tasks.setArguments(args); // hier wird der Name weitergegebn
+                ft.replace(R.id.fragment_layout, tasks).commit();
             }
 
         });
