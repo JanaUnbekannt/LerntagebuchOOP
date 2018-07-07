@@ -1,15 +1,20 @@
 package com.example.students.lerntagebuchoop.activity;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +44,8 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
     Uncertainties uncertainties;
 
     TextView actionBarTopic = null;
+    ImageButton actionBarNavigationButton;
+    ImageButton actionBarSettingsButtonNotFinal;
     String actionBarTitle;
     String currentScreen;
 
@@ -51,7 +58,7 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
-        View view =getSupportActionBar().getCustomView();
+        View view = getSupportActionBar().getCustomView();
 
         //TODO BackStack
         //Packe Tasks-Fragment in "fragment_layout"-Container des "activity_base.xml"-Layouts
@@ -64,11 +71,11 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
         actionBarTitle = getString(R.string.actionbar_topic_tasks);
         actionBarTopic.setText(actionBarTitle);
 
-        //TODO Navigation Screens set currentScreen oder change Fragment
-        //TODO Unterscheiden von CurrentTask OldTask
-        //TODO Change Button Design
+
         //TODO BackStack
-        ImageButton actionBarNavigationButton= (ImageButton)view.findViewById(R.id.action_bar_navigation);
+        //TODO Lizenz Icons im Impressum vermerken
+        actionBarNavigationButton = (ImageButton) view.findViewById(R.id.action_bar_navigation);
+        actionBarSettingsButtonNotFinal= (ImageButton)view.findViewById(R.id.action_bar_settings);
 
         actionBarNavigationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +89,12 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
                         currentScreen = "FeedbackQuestions";
                         fragmentManager.beginTransaction().replace(R.id.fragment_layout, feedbackQuestions).commit();
 
+                        //Navigation-Button anpassen
+                        actionBarNavigationButton.setImageResource(R.drawable._004_notebook);
+
+                        //Add Settings-Button
+                        actionBarSettingsButtonNotFinal.setImageResource(R.drawable._003_settings);
+
                         //ActionBar Titel anpassen
                         actionBarTitle = getString(R.string.actionbar_topic_feedback_questions);
                         actionBarTopic.setText(actionBarTitle);
@@ -93,6 +106,12 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
                         feedbackQuestions = new FeedbackQuestions();
                         currentScreen = "FeedbackQuestions";
                         fragmentManager.beginTransaction().replace(R.id.fragment_layout, feedbackQuestions).commit();
+
+                        //Navigation-Button anpassen
+                        actionBarNavigationButton.setImageResource(R.drawable._004_notebook);
+
+                        //Add Settings-Button
+                        actionBarSettingsButtonNotFinal.setImageResource(R.drawable._003_settings);
 
                         //ActionBar Titel anpassen
                         actionBarTitle = getString(R.string.actionbar_topic_feedback_questions);
@@ -106,6 +125,12 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
                         currentScreen = "AllTopics";
                         fragmentManager.beginTransaction().replace(R.id.fragment_layout, allTopics).commit();
 
+                        //Navigation-Button anpassen
+                        actionBarNavigationButton.setImageResource(R.drawable._002_speech_bubble);
+
+                        //Add Settings-Button
+                        actionBarSettingsButtonNotFinal.setImageResource(R.drawable._003_settings);
+
                         //ActionBar Titel anpassen
                         actionBarTitle = getString(R.string.actionbar_topic_all_topics);
                         actionBarTopic.setText(actionBarTitle);
@@ -117,6 +142,12 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
                         allTopics = new AllTopics();
                         currentScreen = "AllTopics";
                         fragmentManager.beginTransaction().replace(R.id.fragment_layout, allTopics).commit();
+
+                        //Navigation-Button anpassen
+                        actionBarNavigationButton.setImageResource(R.drawable._002_speech_bubble);
+
+                        //Add Settings-Button
+                        actionBarSettingsButtonNotFinal.setImageResource(R.drawable._003_settings);
 
                         //ActionBar Titel anpassen
                         actionBarTitle = getString(R.string.actionbar_topic_all_topics);
@@ -130,6 +161,12 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
                         currentScreen = "AllTopics";
                         fragmentManager.beginTransaction().replace(R.id.fragment_layout, allTopics).commit();
 
+                        //Navigation-Button anpassen
+                        actionBarNavigationButton.setImageResource(R.drawable._002_speech_bubble);
+
+                        //Add Settings-Button
+                        actionBarSettingsButtonNotFinal.setImageResource(R.drawable._003_settings);
+
                         //ActionBar Titel anpassen
                         actionBarTitle = getString(R.string.actionbar_topic_all_topics);
                         actionBarTopic.setText(actionBarTitle);
@@ -142,6 +179,12 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
                         currentScreen = "Tasks";
                         fragmentManager.beginTransaction().replace(R.id.fragment_layout, currentTasks).commit();
 
+                        //Navigation-Button anpassen
+                        actionBarNavigationButton.setImageResource(R.drawable._001_left_arrow);
+
+                        //Add Settings-Button
+                        actionBarSettingsButtonNotFinal.setImageResource(R.drawable._003_settings);
+
                         //ActionBar Titel anpassen
                         actionBarTitle = getString(R.string.actionbar_topic_tasks);
                         actionBarTopic.setText(actionBarTitle);
@@ -152,7 +195,7 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
             }
         });
 
-        ImageButton actionBarSettingsButton= (ImageButton)view.findViewById(R.id.action_bar_settings);
+        final ImageButton actionBarSettingsButton= (ImageButton)view.findViewById(R.id.action_bar_settings);
 
         actionBarSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +205,12 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
                 settings = new Settings();
                 currentScreen = "Settings";
                 fragmentManager.beginTransaction().replace(R.id.fragment_layout, settings).commit();
+
+                //Navigation-Button anpassen
+                actionBarNavigationButton.setImageResource(R.drawable._001_left_arrow);
+
+                //Remove Settings-Button
+                actionBarSettingsButton.setImageResource(android.R.color.transparent);
 
                 //ActionBar Titel anpassen
                 actionBarTitle = getString(R.string.actionbar_topic_settings);

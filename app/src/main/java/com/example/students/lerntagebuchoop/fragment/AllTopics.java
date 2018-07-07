@@ -82,6 +82,11 @@ public class AllTopics extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //View leeren
+        if (container != null) {
+            container.removeAllViews();
+        }
+
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_all_topics, container, false);
         mListView = (ListView) mView.findViewById(R.id.allTopicsListView);
