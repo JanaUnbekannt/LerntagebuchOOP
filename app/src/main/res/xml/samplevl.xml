@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lecture>
+    <date>31.02.2017</date>
+    <topic>Sample</topic>
+    <questions>
+        <task>
+            <description>What is your Name?</description>
+            <text>1</text>
+        </task>
+        <task>
+            <description>What is your Quest?</description>
+            <text>2</text>
+        </task>
+        <task>
+            <description>What is your favourite color?</description>
+            <text>3</text>
+        </task>
+    </questions>
+</lecture>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lecture>
+    <date>31.12.1999</date>
+    <topic>Primitive Datentypen</topic>
+    <questions>
+        <task>
+            <description>Nenne 5 primitive Datentypen</description>
+            <text></text>
+        </task>
+        <task>
+            <description>Deklariere und initalisiere ein char</description>
+            <text></text>
+        </task>
+        <task>
+            <description>Wieviele Werte hat ein boolean?</description>
+            <text></text>
+        </task>
+    </questions>
+</lecture>
