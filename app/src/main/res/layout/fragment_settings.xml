@@ -7,40 +7,82 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TableRow
+        <TextView
+            android:id="@+id/settings_label_matrnr"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/settings_label_matrnr" />
 
-            <TextView
-                android:id="@+id/settings_label_matrnr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_label_matrnr" />
-
-        </TableRow>
-
-        <TableRow
+        <TextView
+            android:id="@+id/settings_label_student"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="@string/settings_label_student" />
 
-            <TextView
-                android:id="@+id/settings_label_student"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_label_student" />
-        </TableRow>
-
-        <TableRow
+        <TextView
+            android:id="@+id/settings_label_points"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="@string/settings_label_points" />
 
-        <TableRow
+        <TextView
+            android:id="@+id/settings_label_rules"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </TableLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="@string/settings_label_rules" />
+
+        <TextView
+            android:id="@+id/settings_label_notifications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="@string/settings_label_notifications" />
+
+        <CheckBox
+            android:id="@+id/settings_checkBox_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="@string/settings_notification_warning" />
+
+        <CheckBox
+            android:id="@+id/settings_checkBox_questions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="@string/settings_notification_new_question" />
+
+        <CheckBox
+            android:id="@+id/settings_checkBox_tutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="@string/settings_notification_tutor" />
+
+        <Button
+            android:id="@+id/settings_button_ausloggen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:text="@string/settings_button_logout" />
+
+        <TextView
+            android:id="@+id/settings_Link_impressum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="@string/settings_LLink_impressum" />
+    </LinearLayout>
 
 </FrameLayout>

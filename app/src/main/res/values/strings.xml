@@ -13,7 +13,15 @@
 
     <!-- activity_login -->
     <string name="login_button_login">Login</string>
-    <string name="settings_label_student">Student:</string>
-    <string name="settings_label_matrnr">MatrNr:</string>
+    <string name="settings_label_student">Student: Max Mustermann</string>
+    <string name="settings_label_matrnr">MatrNr: 123456</string>
+    <string name="settings_label_points">Punktestand: 0/10 </string>
+    <string name="settings_label_rules">Spielregeln für zusätzliche Klausurpunkte</string>
+    <string name="settings_label_notifications">Benachrichtigungen</string>
+    <string name="settings_notification_warning">Noch-Nichts-Abgegeben-Warnung</string>
+    <string name="settings_notification_new_question">Neue Fragen können bearbeitet werden</string>
+    <string name="settings_notification_tutor">Nachricht vom Tutor</string>
+    <string name="settings_button_logout">Ausloggen</string>
+    <string name="settings_LLink_impressum"><![CDATA[Impressum & Datenschutz]]></string>
 
 </resources>
