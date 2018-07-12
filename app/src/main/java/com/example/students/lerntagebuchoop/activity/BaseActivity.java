@@ -57,9 +57,6 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // load all data
-        IntegrationData.getInstance(this);
         setContentView(R.layout.activity_base);
         //Setze meine selbsterstellte ActionBar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

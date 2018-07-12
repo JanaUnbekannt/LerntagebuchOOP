@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mails>
+    <mail>
+        <user>679210</user>
+        <question>Warum funktioniert foreach nicht bei normalen Arrays?</question>
+        <answer>Funktioniert nur für Subklassen der Klasse Collection</answer>
+    </mail>
+</mails>

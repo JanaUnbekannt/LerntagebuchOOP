@@ -109,7 +109,7 @@ public class Tasks extends Fragment {
 
         taskItems = new ArrayList<>();
 
-        lectureJSON = IntegrationData.getInstance().resources.get(taskName);
+        lectureJSON = IntegrationData.getInstance().lectureResources.get(taskName);
         try {
             title = (String)((JSONObject)lectureJSON.get("lecture")).get("topic");
             JSONArray ja = (JSONArray)((JSONObject)((JSONObject)lectureJSON.get("lecture")).get("questions")).get("task");
@@ -140,7 +140,7 @@ public class Tasks extends Fragment {
         for(int i=0; i<xmlFields.length; i++){
             // finde VL mit aktuellem Datum
             try {
-                JSONObject lecture = (JSONObject)(IntegrationData.getInstance().resources.get(xmlFields[i].getName())).get("lecture");
+                JSONObject lecture = (JSONObject)(IntegrationData.getInstance().lectureResources.get(xmlFields[i].getName())).get("lecture");
                 tempDate = sdf.parse(lecture.get("date").toString());
                 if(i == 0){
                     currentLectureDate = tempDate;

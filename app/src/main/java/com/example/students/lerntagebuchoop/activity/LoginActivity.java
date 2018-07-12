@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.students.lerntagebuchoop.R;
+import com.example.students.lerntagebuchoop.model.IntegrationData;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,6 +20,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // load all data
+        IntegrationData.getInstance(this);
 
         //Setze meine selbsterstellte ActionBar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -62,6 +66,17 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
 
+            }
+        });
+
+        //Tutorlogin
+        Button tutorLogin = (Button)findViewById(R.id.tutorLogin);
+        tutorLogin.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, TutorActivity.class);
+                LoginActivity.this.startActivity(intent);
             }
         });
 

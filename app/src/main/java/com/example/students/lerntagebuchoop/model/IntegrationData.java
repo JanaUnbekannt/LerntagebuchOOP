@@ -15,10 +15,12 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class IntegrationData {
     private static IntegrationData instance;
-    public HashMap<String, JSONObject> resources;
+    public HashMap<String, JSONObject> lectureResources;
+    public HashMap<String, JSONObject> mailResources;
 
     IntegrationData(Context _context) throws IllegalAccessException {
-        resources = new HashMap<>();
+        mailResources = new HashMap<>();
+        lectureResources = new HashMap<>();
         loadAllResources(_context);
     }
 
@@ -39,13 +41,18 @@ public class IntegrationData {
 
     private void loadAllResources(Context context) throws IllegalAccessException {
         Field[] xmlFields = R.xml.class.getFields();
-
+        String resourceMap = "";
         for(int i=0; i<xmlFields.length; i++){
             XmlPullParser parser = context.getResources().getXml(xmlFields[i].getInt(null));
             String js = "";
             try{
                 while (parser.next() != XmlResourceParser.END_DOCUMENT) {
                     switch (parser.getEventType()) {
+                        case XmlResourceParser.START_DOCUMENT:
+                            parser.next();
+                            resourceMap = parser.getName();
+                            js+="<"+parser.getName()+">";
+                            break;
                         case XmlResourceParser.START_TAG:
                             js+="<"+parser.getName()+">";
                             break;
@@ -57,7 +64,14 @@ public class IntegrationData {
                             break;
                     }
                 }
-                resources.put(xmlFields[i].getName(), new XmlToJson.Builder(js).build().toJson());
+                switch(resourceMap){
+                    case "mails":
+                        mailResources.put(xmlFields[i].getName(), new XmlToJson.Builder(js).build().toJson());
+                        break;
+                    case "lecture":
+                        lectureResources.put(xmlFields[i].getName(), new XmlToJson.Builder(js).build().toJson());
+                        break;
+                }
             }catch(Exception e){
                 e.printStackTrace();
             }

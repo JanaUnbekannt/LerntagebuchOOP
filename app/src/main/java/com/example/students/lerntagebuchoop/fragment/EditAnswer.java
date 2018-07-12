@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,13 @@ public class EditAnswer extends Fragment{
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
                 }
-                getFragmentManager().popBackStack();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Tasks tasks = new Tasks();
+                Bundle args = new Bundle();
+                args.putString("taskName", lectureName);
+                tasks.setArguments(args); // hier wird der Name weitergegebn
+                ft.replace(R.id.fragment_layout, tasks).commit();
+
             }
         });
 
@@ -69,7 +76,7 @@ public class EditAnswer extends Fragment{
 
     private void saveToJSON(String question, String text, String lectureName) throws NoSuchFieldException {
         try {
-            JSONObject lecture = (JSONObject)(IntegrationData.getInstance().resources.get(lectureName)).get("lecture");
+            JSONObject lecture = (JSONObject)(IntegrationData.getInstance().lectureResources.get(lectureName)).get("lecture");
             JSONArray ja = (JSONArray)((JSONObject)lecture.get("questions")).get("task");
             for(int i =0; i<ja.length(); i++) {
                 JSONObject task = (JSONObject) ja.get(i);
