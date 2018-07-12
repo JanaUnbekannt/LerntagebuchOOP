@@ -1,5 +1,6 @@
 package com.example.students.lerntagebuchoop.activity;
 
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -25,6 +26,11 @@ import com.example.students.lerntagebuchoop.fragment.FeedbackQuestions;
 import com.example.students.lerntagebuchoop.fragment.Settings;
 import com.example.students.lerntagebuchoop.fragment.Tasks;
 import com.example.students.lerntagebuchoop.fragment.Uncertainties;
+import com.example.students.lerntagebuchoop.model.IntegrationData;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragmentInteractionListener,
                                                                 Chat.OnFragmentInteractionListener,
@@ -34,7 +40,6 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
                                                                 Uncertainties.OnFragmentInteractionListener{
 
     FragmentManager fragmentManager = getSupportFragmentManager();
-
     //Fragments
     AllTopics allTopics;
     Chat chat;
@@ -52,8 +57,10 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
 
+        // load all data
+        IntegrationData.getInstance(this);
+        setContentView(R.layout.activity_base);
         //Setze meine selbsterstellte ActionBar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);

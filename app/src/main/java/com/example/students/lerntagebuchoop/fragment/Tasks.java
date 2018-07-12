@@ -5,19 +5,21 @@ import android.content.res.XmlResourceParser;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.students.lerntagebuchoop.R;
 import com.example.students.lerntagebuchoop.adapter.TaskListAdapter;
+import com.example.students.lerntagebuchoop.model.IntegrationData;
 import com.example.students.lerntagebuchoop.model.TaskItem;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -51,6 +53,8 @@ public class Tasks extends Fragment {
     //ArrayAdapter<String> mAdapter;
     TaskListAdapter mAdapter;
     ArrayList<TaskItem> taskItems;
+    int lectureXmlId;
+    JSONObject lectureJSON;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -103,46 +107,24 @@ public class Tasks extends Fragment {
             this.taskName = (String) this.getArguments().get("taskName");
         }
 
-        int id = getResources().getIdentifier(this.taskName, "xml", getContext().getPackageName());
-        XmlPullParserFactory factory = null;
-        try {
-            factory = XmlPullParserFactory.newInstance();
-            factory.setNamespaceAware(true);
-            factory.newPullParser();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        }
-
         taskItems = new ArrayList<>();
 
-        //finde Titel und Fragen für aktuelles Thema
-        XmlPullParser rp = getResources().getXml(id);
-        TaskItem ti = null;
+        lectureJSON = IntegrationData.getInstance().resources.get(taskName);
         try {
-            while (rp.next() != XmlResourceParser.END_DOCUMENT) {
-                switch(rp.getEventType()) {
-                    case XmlResourceParser.START_TAG:
-                        switch (rp.getName()) {
-                            case "description":
-                                ti = new TaskItem();
-                                ti.setDescription(rp.nextText());
-                                break;
-                            case "text":
-                                if(ti != null) {
-                                    ti.setText(rp.nextText());
-                                    taskItems.add(ti);
-                                }
-                                break;
-                            case "topic":
-                            title = rp.nextText();
-                            break;
-                        }
-                        break;
-                }
+            title = (String)((JSONObject)lectureJSON.get("lecture")).get("topic");
+            JSONArray ja = (JSONArray)((JSONObject)((JSONObject)lectureJSON.get("lecture")).get("questions")).get("task");
+            for(int i =0; i<ja.length(); i++){
+                TaskItem ti = new TaskItem();
+                JSONObject task = (JSONObject) ja.get(i);
+                ti.setDescription(task.getString("description"));
+                ti.setText(task.getString("text"));
+                taskItems.add(ti);
             }
-        }catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
+
+
     }
 
     private String findCurrentLecture() throws IllegalAccessException, ParseException {
@@ -153,37 +135,21 @@ public class Tasks extends Fragment {
         Date currentLectureDate = null;
         Date tempDate = null;
 
-        XmlPullParserFactory factory = null;
-        try {
-            factory = XmlPullParserFactory.newInstance();
-            factory.setNamespaceAware(true);
-            factory.newPullParser();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        }
-
         Field[] xmlFields = R.xml.class.getFields();
 
         for(int i=0; i<xmlFields.length; i++){
             // finde VL mit aktuellem Datum
-            XmlPullParser rp = getResources().getXml(xmlFields[i].getInt(null));
             try {
-                while (rp.next() != XmlResourceParser.END_DOCUMENT) {
-                    switch (rp.getEventType()) {
-                        case XmlResourceParser.START_TAG:
-                            if("date".equals(rp.getName())){
-                                tempDate = sdf.parse(rp.nextText());
-                                if(i == 0){
-                                    currentLectureDate = tempDate;
-                                    currentLecture = xmlFields[i].getName();
-                                }
-                                else if(tempDate.after(currentLectureDate) &&
-                                        tempDate.before(today)){
-                                    currentLectureDate = tempDate;
-                                    currentLecture = xmlFields[i].getName();
-                                }
-                            }
-                    }
+                JSONObject lecture = (JSONObject)(IntegrationData.getInstance().resources.get(xmlFields[i].getName())).get("lecture");
+                tempDate = sdf.parse(lecture.get("date").toString());
+                if(i == 0){
+                    currentLectureDate = tempDate;
+                    currentLecture = xmlFields[i].getName();
+                }
+                else if(tempDate.after(currentLectureDate) &&
+                        tempDate.before(today)){
+                    currentLectureDate = tempDate;
+                    currentLecture = xmlFields[i].getName();
                 }
             }catch (Exception e) {
                 e.printStackTrace();
@@ -197,8 +163,13 @@ public class Tasks extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
+        //View leeren
+        if (container != null) {
+            container.removeAllViews();
+        }
+
+        // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_tasks, container, false);
         mtitle = (TextView) mView.findViewById(R.id.lectureTitle);
         mtitle.setText(title);
@@ -209,6 +180,18 @@ public class Tasks extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                String question = taskItems.get(position).getDescription();
+                String answer = taskItems.get(position).getText();
+                EditAnswer edit = new EditAnswer();
+                Bundle args = new Bundle();
+                args.putString("question", question);
+                args.putString("answer", answer);
+                args.putString("lectureName", taskName);
+                edit.setArguments(args); // hier wird der Name weitergegebn
+                ft.replace(R.id.frameLayout, edit).commit();
+
             }
         });
         return mView;
