@@ -69,16 +69,20 @@ public class ResponseBox extends Fragment {
 
     private void saveToJSON(String question, String text, String userName) throws NoSuchFieldException {
         try {
-            JSONObject mails = IntegrationData.getInstance().mailResources.get("mails");
+            JSONObject tutormails = IntegrationData.getInstance().mailResources.get("tutormails");
+            JSONObject mails = (JSONObject)tutormails.get("mails");
+            JSONArray ja = (JSONArray)mails.get("mail");
 
-            /*
             for(int i =0; i<ja.length(); i++) {
-                JSONObject task = (JSONObject) ja.get(i);
-                if(question.equals(task.getString("description"))){
-                    task.put("text", text);
+                JSONObject mail = (JSONObject) ja.get(i);
+                if(userName.equals(mail.getString("user")) &&
+                        question.equals(mail.getString("question"))){
+                    mail.put("answer", text);
                 }
             }
-            */
+            Fragment frg = getFragmentManager().findFragmentById(R.id.tutorList);
+            getFragmentManager().beginTransaction().replace(R.id.tutorList, frg).commit();
+
         }catch(Exception e){
             e.printStackTrace();
         }

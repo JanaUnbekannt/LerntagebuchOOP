@@ -5,4 +5,9 @@
         <question>Warum funktioniert foreach nicht bei normalen Arrays?</question>
         <answer>Funktioniert nur für Subklassen der Klasse Collection</answer>
     </mail>
+    <mail>
+        <user>0815</user>
+        <question>What is my favourite Color?</question>
+        <answer></answer>
+    </mail>
 </mails>

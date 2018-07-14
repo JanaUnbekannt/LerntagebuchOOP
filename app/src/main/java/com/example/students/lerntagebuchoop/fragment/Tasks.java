@@ -46,19 +46,12 @@ public class Tasks extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private String taskName;
-    private List<String> questionList;
     View mView;
     String title;
     ListView mListView;
-    //ArrayAdapter<String> mAdapter;
     TaskListAdapter mAdapter;
     ArrayList<TaskItem> taskItems;
-    int lectureXmlId;
     JSONObject lectureJSON;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
     private TextView mtitle;
@@ -89,11 +82,6 @@ public class Tasks extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
         if(this.getArguments() == null){
             try {
                 this.taskName = findCurrentLecture();

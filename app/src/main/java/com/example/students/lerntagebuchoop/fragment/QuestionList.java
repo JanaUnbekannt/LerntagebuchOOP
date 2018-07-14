@@ -1,6 +1,7 @@
 package com.example.students.lerntagebuchoop.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -35,36 +37,18 @@ public class QuestionList extends Fragment {
     private MailAdapter mAdapter;
     private ArrayList<MailItem> mailList;
 
+    /*
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        refreshMails();
+    }
+    */
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mailList = new ArrayList<>();
-
-        try {
-            Object mails = IntegrationData.getInstance().mailResources.get("tutormails").get("mails");
-            if(mails instanceof JSONObject){
-                MailItem m = new MailItem();
-                JSONObject mail = (JSONObject)((JSONObject)mails).get("mail");
-                m.setAnswer(mail.getString("answer"));
-                m.setQuestion(mail.getString("question"));
-                m.setUserName(mail.getString("user"));
-                mailList.add(m);
-            }
-            else if(mails instanceof JSONArray){
-                JSONArray mailArray = (JSONArray) ((JSONObject)mails).get("mail");
-                for(int i = 0; i<mailArray.length(); i++){
-                    MailItem m = new MailItem();
-                    JSONObject mail = (JSONObject)((JSONObject)mailArray.get(i)).get("mail");
-                    m.setAnswer(mail.getString("answer"));
-                    m.setQuestion(mail.getString("question"));
-                    m.setUserName(mail.getString("user"));
-                    mailList.add(m);
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        refreshMails();
     }
 
     @Override
@@ -99,6 +83,35 @@ public class QuestionList extends Fragment {
             }
         });
         return mView;
+    }
+
+    private void refreshMails(){
+        mailList = new ArrayList<>();
+
+        try {
+            Object mails = ((JSONObject)IntegrationData.getInstance().mailResources.get("tutormails").get("mails")).get("mail");
+            if(mails instanceof JSONObject){
+                MailItem m = new MailItem();
+                JSONObject mail = (JSONObject)((JSONObject)mails).get("mail");
+                m.setAnswer(mail.getString("answer"));
+                m.setQuestion(mail.getString("question"));
+                m.setUserName(mail.getString("user"));
+                mailList.add(m);
+            }
+            else if(mails instanceof JSONArray){
+                for(int i = 0; i< ((JSONArray)mails).length(); i++){
+                    MailItem m = new MailItem();
+                    JSONObject mail = (JSONObject)((JSONArray)mails).get(i);
+                    m.setAnswer(mail.getString("answer"));
+                    m.setQuestion(mail.getString("question"));
+                    m.setUserName(mail.getString("user"));
+                    mailList.add(m);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

@@ -8,19 +8,20 @@
 
     <Button
         android:id="@+id/tutorSubmit"
-        android:layout_width="95dp"
-        android:layout_height="53dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="101dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
         android:text="Fertig"
         app:layout_constraintBottom_toBottomOf="@+id/tutorResponseEdit"
         app:layout_constraintEnd_toEndOf="@+id/tutorResponseEdit" />
 
     <EditText
         android:id="@+id/tutorResponseEdit"
-        android:layout_width="338dp"
-        android:layout_height="170dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -28,17 +29,18 @@
         android:textAlignment="viewStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.394"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tutorQuestion"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tutorQuestion"
         android:layout_width="0dp"
         android:layout_height="39dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
