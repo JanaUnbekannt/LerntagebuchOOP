@@ -91,14 +91,15 @@ public class FeedbackQuestions extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                String nextTasks = ((TextView) view).getText().toString();
-                nextTasks = nextTasks.toLowerCase();
-                nextTasks = nextTasks.replaceAll("\\s+",""); //XML entspricht lowerCase ohne whitespace
-                Tasks tasks = new Tasks();
-                Bundle args = new Bundle();
-                args.putString("taskName", nextTasks);
-                tasks.setArguments(args); // hier wird der Name weitergegebn
-                ft.replace(R.id.fragment_layout, tasks).commit();
+                //String nextTasks = ((TextView) view).getText().toString();
+                //nextTasks = nextTasks.toLowerCase();
+                //nextTasks = nextTasks.replaceAll("\\s+",""); //XML entspricht lowerCase ohne whitespace
+                //Tasks tasks = new Tasks();
+                //Bundle args = new Bundle();
+                //args.putString("taskName", nextTasks);
+                //tasks.setArguments(args); // hier wird der Name weitergegebn
+                Chat chat = new Chat();
+                ft.replace(R.id.fragment_layout, chat).commit();
             }
 
         });
