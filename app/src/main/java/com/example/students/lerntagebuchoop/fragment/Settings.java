@@ -1,14 +1,18 @@
 package com.example.students.lerntagebuchoop.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.students.lerntagebuchoop.R;
+import com.example.students.lerntagebuchoop.activity.BaseActivity;
+import com.example.students.lerntagebuchoop.activity.LoginActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +33,8 @@ public class Settings extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private Button buttonLogout;
 
     public Settings() {
         // Required empty public constructor
@@ -68,6 +74,14 @@ public class Settings extends Fragment {
         if (container != null) {
             container.removeAllViews();
         }
+
+        //Logik Button Logout
+        //Pass your layout xml to the inflater and assign it to rootView.
+        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        buttonLogout = (Button) rootView.findViewById(R.id.settings_button_ausloggen);
+
+        //TODO Implementiere OnClickListener
+        //buttonLogout.setOnClickListener()
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false);

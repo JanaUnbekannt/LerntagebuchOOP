@@ -53,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
+            android:checked="true"
             android:text="@string/settings_notification_warning" />
 
         <CheckBox
@@ -60,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
+            android:checked="true"
             android:text="@string/settings_notification_new_question" />
 
         <CheckBox
@@ -67,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
+            android:checked="true"
             android:text="@string/settings_notification_tutor" />
 
         <Button

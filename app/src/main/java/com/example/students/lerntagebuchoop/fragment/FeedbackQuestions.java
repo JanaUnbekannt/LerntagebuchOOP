@@ -4,9 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.students.lerntagebuchoop.R;
 
@@ -23,6 +28,11 @@ public class FeedbackQuestions extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    View mView;
+    ListView mListView;
+    ArrayAdapter<String> mAdapter;
+    String [] parsedXml;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -64,6 +74,33 @@ public class FeedbackQuestions extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //View leeren
+        if (container != null) {
+            container.removeAllViews();
+        }
+
+        // Inflate the layout for this fragment
+        mView = inflater.inflate(R.layout.fragment_feedback_questions, container, false);
+        mListView = (ListView) mView.findViewById(R.id.feedback_question_ListView);
+        mAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_dropdown_item_1line, android.R.id.text1, parsedXml);
+        mListView.setAdapter(mAdapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                String nextTasks = ((TextView) view).getText().toString();
+                nextTasks = nextTasks.toLowerCase();
+                nextTasks = nextTasks.replaceAll("\\s+",""); //XML entspricht lowerCase ohne whitespace
+                Tasks tasks = new Tasks();
+                Bundle args = new Bundle();
+                args.putString("taskName", nextTasks);
+                tasks.setArguments(args); // hier wird der Name weitergegebn
+                ft.replace(R.id.fragment_layout, tasks).commit();
+            }
+
+        });
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_feedback_questions, container, false);
     }

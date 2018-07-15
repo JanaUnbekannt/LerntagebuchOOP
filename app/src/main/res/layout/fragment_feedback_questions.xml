@@ -6,9 +6,12 @@
     tools:context=".fragment.FeedbackQuestions">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/feedback_question_ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       />
+        android:dividerHeight="1dp"
+        android:divider="#000000"
+        android:clickable="true"/>
 
 </FrameLayout>
