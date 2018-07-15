@@ -1,5 +1,6 @@
 package com.example.students.lerntagebuchoop.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,8 +8,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.example.students.lerntagebuchoop.R;
+import com.example.students.lerntagebuchoop.activity.BaseActivity;
+import com.example.students.lerntagebuchoop.adapter.ChatAdapter;
+import com.example.students.lerntagebuchoop.model.ChatItem;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +42,14 @@ public class Chat extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private View view;
+    private ListView listView;
+    private EditText message;
+    private ImageView send;
+    private ChatAdapter adapter;
+    private ArrayList<ChatItem> chatItems;
+    private ChatItem chatItem;
 
     public Chat() {
         // Required empty public constructor
@@ -59,13 +80,52 @@ public class Chat extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //Get my TextViews and Images
+        view = inflater.inflate(R.layout.fragment_chat, container, false);
+        listView = (ListView) view.findViewById(R.id.chat_list_view);
+        message = (EditText)view.findViewById(R.id.chat_message_edit_text);
+        send = (ImageView)view.findViewById(R.id.chat_send_button);
+        chatItems = new ArrayList<ChatItem>();
+
+        ((BaseActivity)getActivity()).setActionBarTopic("Chat");
+
+
+
+
+
+        //Set imageButton on OnClickListener
+        send.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                adapter = null;
+                chatItem = new ChatItem();
+                chatItem.setMessage(message.getText().toString());
+
+                chatItems.add(chatItem);
+                adapter = new ChatAdapter(getActivity(), chatItems);
+                listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+                message.getText().clear();
+
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+
+            }
+
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

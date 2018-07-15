@@ -223,6 +223,14 @@ public class BaseActivity extends AppCompatActivity implements AllTopics.OnFragm
         });
     }
 
+    public void setActionBarTopic(String changeTopic) {
+
+        //ActionBar Titel anpassen
+        actionBarTitle = getString(R.string.actionbar_topic_settings);
+        actionBarTopic.setText(changeTopic);
+
+    }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {
