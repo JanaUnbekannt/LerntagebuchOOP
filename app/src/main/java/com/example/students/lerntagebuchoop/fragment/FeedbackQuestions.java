@@ -103,7 +103,7 @@ public class FeedbackQuestions extends Fragment {
 
         });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feedback_questions, container, false);
+        return mView; //inflater.inflate(R.layout.fragment_feedback_questions, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
