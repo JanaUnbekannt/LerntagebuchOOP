@@ -24,7 +24,7 @@ public class IntegrationData {
         loadAllResources(_context);
     }
 
-    public static IntegrationData getInstance(Context context){
+    public static IntegrationData newInstance(Context context){
         if(instance == null){
             try {
                 instance = new IntegrationData(context);

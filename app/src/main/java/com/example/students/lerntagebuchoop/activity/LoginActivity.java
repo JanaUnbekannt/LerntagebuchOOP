@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // load all data
-        IntegrationData.getInstance(this);
+        IntegrationData.newInstance(this);
 
         //Setze meine selbsterstellte ActionBar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

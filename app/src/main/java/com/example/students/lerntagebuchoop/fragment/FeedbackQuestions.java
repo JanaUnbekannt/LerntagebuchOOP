@@ -93,6 +93,9 @@ public class FeedbackQuestions extends Fragment {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 //TODO set Title
                 Chat chat = new Chat();
+                Bundle args = new Bundle();
+                args.putString("lecture", parsedXml[position].toLowerCase().replace(" ", ""));
+                chat.setArguments(args);
                 ft.replace(R.id.fragment_layout, chat).commit();
             }
 

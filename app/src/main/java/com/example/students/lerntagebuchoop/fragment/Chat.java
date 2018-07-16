@@ -20,6 +20,10 @@ import com.example.students.lerntagebuchoop.R;
 import com.example.students.lerntagebuchoop.activity.BaseActivity;
 import com.example.students.lerntagebuchoop.adapter.ChatAdapter;
 import com.example.students.lerntagebuchoop.model.ChatItem;
+import com.example.students.lerntagebuchoop.model.IntegrationData;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -93,9 +97,8 @@ public class Chat extends Fragment {
         message = (EditText)view.findViewById(R.id.chat_message_edit_text);
         send = (ImageView)view.findViewById(R.id.chat_send_button);
         chatItems = new ArrayList<ChatItem>();
-
+        getChatItems();
         ((BaseActivity)getActivity()).setActionBarTopic("Chat");
-
 
 
 
@@ -105,17 +108,30 @@ public class Chat extends Fragment {
 
             @Override
             public void onClick(View view) {
-
-                adapter = null;
                 chatItem = new ChatItem();
                 chatItem.setMessage(message.getText().toString());
-
                 chatItems.add(chatItem);
+                adapter = null;
                 adapter = new ChatAdapter(getActivity(), chatItems);
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
                 message.getText().clear();
+                // Frage an Tutor abspeichern
+                try {
+                    JSONObject tutormails = IntegrationData.getInstance().mailResources.get("tutormails");
+                    JSONObject mails = (JSONObject) tutormails.get("mails");
+                    JSONArray ja = (JSONArray) mails.get("mail");
+                    JSONObject mail = new JSONObject();
+                    mail.put("user", "0815");
+                    mail.put("lecture", getArguments().get("lecture"));
+                    mail.put("question", chatItem.getMessage()) ;
+                    mail.put("answer", "");
+                    ja.put(mail);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
 
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -144,6 +160,8 @@ public class Chat extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        chatItems = new ArrayList<ChatItem>();
+        getChatItems();
     }
 
     @Override
@@ -165,5 +183,30 @@ public class Chat extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void getChatItems(){
+        try {
+            JSONObject tutormails = IntegrationData.getInstance().mailResources.get("tutormails");
+            JSONObject mails = (JSONObject) tutormails.get("mails");
+            JSONArray ja = (JSONArray) mails.get("mail");
+            for(int i =0; i<ja.length(); i++) {
+                JSONObject mail = (JSONObject) ja.get(i);
+                if("0815".equals(mail.getString("user")) &&
+                        getArguments().get("lecture").equals(mail.getString("lecture"))){
+                    chatItem = new ChatItem();
+                    chatItem.setMessage(mail.getString("question"));
+                    chatItems.add(chatItem);
+                    chatItem = new ChatItem();
+                    chatItem.setMessage(mail.getString("answer"));
+                    chatItems.add(chatItem);
+                    adapter = new ChatAdapter(getActivity(), chatItems);
+                    listView.setAdapter(adapter);
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
